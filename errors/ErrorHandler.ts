@@ -5,7 +5,7 @@ export class ErrorHandler extends Error {
     code?: number;
     data?: any;
 
-    constructor(status: number, msg: string, code?: number, data?: any) {
+    constructor (status: number, msg: string, code?: number, data?: any) {
         super(msg);
         this.message = msg;
         this.status = status;

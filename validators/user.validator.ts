@@ -9,5 +9,3 @@ export const userValidator = Joi.object().keys({
     password: Joi.string().regex(RegExpEnum.password).required(),
     phone_number: Joi.string().regex(RegExpEnum.phone_number)
 });
-
-
