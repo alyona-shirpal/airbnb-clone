@@ -12,12 +12,13 @@ const isUserIdPresent = async (req: Request, res: Response, next: NextFunction) 
         if (!userId) {
             throw new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, errors.NOT_FOUND_USER_NOT_PRESENT.message);
         }
-        req.user = userId;
+
         next();
     } catch (e) {
         next(e);
     }
 };
+
 const isEmailUnique = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email } = req.body;
@@ -33,4 +34,19 @@ const isEmailUnique = async (req: Request, res: Response, next: NextFunction) =>
         next(e);
     }
 };
-export { isUserIdPresent, isEmailUnique };
+
+const checkUserRole = (roleArr: string[]) => (req:Request, res: Response, next: NextFunction) => {
+    try {
+        const { roles } = req.user;
+
+        if (!roleArr.includes(roles)) {
+            throw new ErrorHandler(ResponseStatusCodesEnum.FORBIDDEN, errors.FORBIDDEN.message);
+        }
+
+        next();
+    } catch (e) {
+        next(e);
+    }
+};
+
+export { isUserIdPresent, isEmailUnique, checkUserRole };

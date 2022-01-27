@@ -4,9 +4,9 @@ export const htmlTemplates: {[index: string]: {subject: string, templateFileName
     [ActionEnum.USER_REGISTER]: {
         subject: 'welcome',
         templateFileName: 'welcome'
-    },
-    [ActionEnum.FORGOT_PASSWORD]: {
-        subject: 'ohh so sorry',
-        templateFileName: 'forgot-password'
     }
+    // [ActionEnum.FORGOT_PASSWORD]: {
+    //     subject: 'ohh so sorry',
+    //     templateFileName: 'forgot-password'
+    // }
 };

@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as cors from 'cors';
 
-import { authRouter, userRouter, apartmentRouter } from './routes';
+import { authRouter, userRouter, apartmentRouter, bookingRouter } from './routes';
 import { sequelize } from './config/sequelize';
 
 class App {
@@ -44,6 +44,7 @@ class App {
         this.app.use('/users', userRouter);
         this.app.use('/auth', authRouter);
         this.app.use('/apartments', apartmentRouter);
+        this.app.use('/booking', bookingRouter);
     };
 }
 

@@ -1,8 +1,21 @@
-import { Table, Model, AutoIncrement, PrimaryKey, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { User } from './users.model';
+import {
+    Table,
+    Model,
+    AutoIncrement,
+    PrimaryKey,
+    Column,
+    DataType,
+    ForeignKey,
+    BelongsTo,
+    CreatedAt, UpdatedAt, HasMany
+} from 'sequelize-typescript';
 
-interface RentingRules { smoking: boolean; pets: boolean; elevator: boolean; rent_days_min: number }
-interface Place { bedrooms: number, beds: number, floor: number, room_type: object } // TODO the type safety of room_type object!
+import { User } from './users.model';
+import { Booking } from './booking.model';
+
+interface RentingRules { smoking: boolean; pets: boolean; elevator: boolean; rent_days_max: number }
+interface Place { bedrooms: number, beds: number, floor: number, room_type: 'private' | 'shared' |'apartment'}
+interface Location { country: string, city: string, street: string, house_number: number }
 
 @Table
 export class Apartment extends Model {
@@ -11,7 +24,7 @@ export class Apartment extends Model {
     @Column
     apartment_id: number;
 
-    @Column(DataType.JSON)// bedrooms, beds, floor, room_type[private, shared, apartment]
+    @Column(DataType.JSON) // bedrooms, beds, floor, room_type[private, shared, apartment]
     place: Place;
 
     @Column
@@ -20,19 +33,29 @@ export class Apartment extends Model {
     @Column(DataType.JSON) // smoking, pets, elevator, rent_days_min(number)
     renting_rules: RentingRules;
 
-    @Column(DataType.JSON) // address [country, city, street, house_number]
-    location: object; // TODO the interface for this object!
+    @Column(DataType.JSON) // location [country, city, street, house_number]
+    location: Location;
 
     @Column
     price: number;
 
+    @CreatedAt
+    createdAt: Date;
+
+    @UpdatedAt
+    updatedAt: Date;
+
     @ForeignKey(() => User)
     @Column
-    user_id: number
+    user_id: number;
 
-    @BelongsTo(() => User, { foreignKey: 'user_id' })
-    host: User
+    @BelongsTo(() => User, {
+        foreignKey: 'user_id'
+    })
+    user: User;
 
-    @Column(DataType.JSON) // from to
-    reservation: Date;
+    @HasMany(() => Booking, {
+        onDelete: 'CASCADE'
+    })
+    booking: Booking;
 }

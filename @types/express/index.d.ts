@@ -7,11 +7,12 @@
 //     }
 // }
 
+// eslint-disable-next-line no-unused-vars
 declare namespace Express {
+    // @ts-ignore
+    import { User } from '../../db/models';
+
     export interface Request {
-        user: any;
-    }
-    export interface Response {
-        user: any;
+        user: User;
     }
 }

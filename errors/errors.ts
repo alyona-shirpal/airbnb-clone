@@ -19,5 +19,9 @@ export const errors = {
     // 409
     ALREADY_EXISTS: {
         message: 'already exists' // when email already exists
+    },
+    // 403
+    FORBIDDEN: {
+        message: 'Access denied' // DENied when user role is forbidden
     }
 };

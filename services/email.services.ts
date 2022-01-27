@@ -32,7 +32,7 @@ const emailTemplates = new Email({
 });
 
 export class MailService {
-    async sendEmail (email: string, action: ActionEnum, context: any = {}): Promise<void> {
+    async sendEmail (email: string, action: ActionEnum, context: object): Promise<void> {
         const templateInfo = htmlTemplates[action];
 
         if (!templateInfo) {

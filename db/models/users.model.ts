@@ -1,4 +1,5 @@
-import { Table, Model, Unique, AutoIncrement, PrimaryKey, Column, CreatedAt, UpdatedAt, DataType, Default } from 'sequelize-typescript';
+import { Table, Model, Unique, AutoIncrement, PrimaryKey, Column, CreatedAt, UpdatedAt, DataType, Default, HasMany } from 'sequelize-typescript';
+import { Apartment } from './apartments.model';
 
 @Table
 export class User extends Model {
@@ -11,9 +12,6 @@ export class User extends Model {
       username: string;
 
       @Column
-      lastname: string;
-
-      @Column
       password: string;
 
       @Unique
@@ -22,9 +20,6 @@ export class User extends Model {
 
       @Column
       phone_number: string;
-
-      @Column
-      reviews: string;
 
       @CreatedAt
       creationDate: Date;
@@ -35,4 +30,9 @@ export class User extends Model {
       @Default('USER')
       @Column(DataType.ENUM('USER', 'MANAGER', 'ADMIN'))
       roles: string;
+
+      @HasMany(() => Apartment, {
+          onDelete: 'CASCADE', hooks: true
+      })
+      apartments: Apartment[]
 }
