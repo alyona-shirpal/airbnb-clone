@@ -4,7 +4,7 @@ export const config = {
     API_URL: process.env.API_URL || 'http://localhost:5000',
 
     JWT_ACCESS_SECRET: process.env.PORT || 'exampleAccessToken',
-    ACCESS_TOKEN_LIFETIME: process.env.ACCESS_TOKEN_LIFETIME || '10m',
+    ACCESS_TOKEN_LIFETIME: process.env.ACCESS_TOKEN_LIFETIME || '1h',
 
     JWT_REFRESH_SECRET: process.env.PORT || 'exampleRefreshToken',
     REFRESH_TOKEN_LIFETIME: process.env.REFRESH_TOKEN_LIFETIME || '1h',

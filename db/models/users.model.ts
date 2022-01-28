@@ -2,7 +2,7 @@ import { Table, Model, Unique, AutoIncrement, PrimaryKey, Column, CreatedAt, Upd
 import { Apartment } from './apartments.model';
 
 @Table
-export class User extends Model {
+export class User extends Model <User> {
       @AutoIncrement
       @PrimaryKey
       @Column

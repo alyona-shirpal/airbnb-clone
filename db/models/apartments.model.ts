@@ -18,7 +18,7 @@ interface Place { bedrooms: number, beds: number, floor: number, room_type: 'pri
 interface Location { country: string, city: string, street: string, house_number: number }
 
 @Table
-export class Apartment extends Model {
+export class Apartment extends Model<Apartment> {
     @AutoIncrement
     @PrimaryKey
     @Column

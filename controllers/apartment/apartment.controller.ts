@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-
 import { Apartment } from '../../db/models';
 import { ErrorHandler, errors } from '../../errors';
 import { ResponseStatusCodesEnum } from '../../constants';
@@ -69,4 +68,12 @@ const updateApartment = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
-export { postApartment, getAll, getOne, deleteApartment, updateApartment };
+const uploadImages = async (req: Request, res:Response, next :NextFunction) => {
+    const files = req.files;
+    console.log(files);
+
+    // @ts-ignore
+    return res.status(200).json(files.map(file => file.filename));
+};
+
+export { postApartment, getAll, getOne, deleteApartment, updateApartment, uploadImages };

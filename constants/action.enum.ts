@@ -1,6 +1,6 @@
 export const enum ActionEnum {
     // eslint-disable-next-line no-unused-vars
-    USER_AUTH = 'user_auth',
+    CONFIRM_BOOKING = 'confirm_booking',
     // eslint-disable-next-line no-unused-vars
     USER_REGISTER = 'user_register',
 }

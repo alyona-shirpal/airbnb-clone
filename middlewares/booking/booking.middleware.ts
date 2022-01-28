@@ -19,10 +19,6 @@ const isIdPresent = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-const isApartmentAvailable = async (req: Request, res: Response, next: NextFunction) => {
-
-};
-
 const isHostId = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user } = req;
@@ -45,4 +41,4 @@ const isHostId = async (req: Request, res: Response, next: NextFunction) => {
         next(e);
     }
 };
-export { isIdPresent, isHostId, isApartmentAvailable };
+export { isIdPresent, isHostId };

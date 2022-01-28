@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { Apartment, Booking } from '../../db/models';
-import { ResponseStatusCodesEnum } from '../../constants';
+import { Apartment, Booking, User } from '../../db/models';
+import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
 import { Op } from 'sequelize';
+import { emailService } from '../../services/email.services';
 
 const bookPlace = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -39,6 +40,12 @@ const bookPlace = async (req: Request, res: Response, next: NextFunction) => {
         }
 
         await Booking.create(booking);
+
+        const tenant = await User.findOne({ where: { user_id } });
+
+        if (!tenant) { return res.status(404) }
+
+        await emailService.sendEmail(tenant.email, ActionEnum.CONFIRM_BOOKING, { username: tenant.username });
 
         res.status(ResponseStatusCodesEnum.CREATED).end();
     } catch (e) {
