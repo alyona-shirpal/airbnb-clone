@@ -1,4 +1,16 @@
-import { Table, Model, Unique, AutoIncrement, PrimaryKey, Column, CreatedAt, UpdatedAt, DataType, Default, HasMany } from 'sequelize-typescript';
+import {
+    Table,
+    Model,
+    Unique,
+    AutoIncrement,
+    PrimaryKey,
+    Column,
+    CreatedAt,
+    UpdatedAt,
+    DataType,
+    Default,
+    HasMany, AllowNull
+} from 'sequelize-typescript';
 import { Apartment } from './apartments.model';
 
 @Table
@@ -20,6 +32,14 @@ export class User extends Model <User> {
 
       @Column
       phone_number: string;
+
+      @AllowNull(true)
+      @Default(null)
+      @Column
+      stripe_id: string;
+
+      @Column
+      first_name: string;
 
       @CreatedAt
       creationDate: Date;

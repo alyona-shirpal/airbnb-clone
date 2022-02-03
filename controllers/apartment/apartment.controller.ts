@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Apartment } from '../../db/models';
+import { Apartment, Files } from '../../db/models';
 import { ErrorHandler, errors } from '../../errors';
 import { ResponseStatusCodesEnum } from '../../constants';
 
@@ -70,10 +70,21 @@ const updateApartment = async (req: Request, res: Response, next: NextFunction) 
 
 const uploadImages = async (req: Request, res:Response, next :NextFunction) => {
     const files = req.files;
+    console.log('**********************************************');
     console.log(files);
+    console.log('**********************************************');
+
+    const b = await Apartment.findOne({ where: { apartment_id: req.params.apartment_id } });
+    console.log(b);
+
+    // // try to find by PK
 
     // @ts-ignore
-    return res.status(200).json(files.map(file => file.filename));
+    await Files.create(req.body);
+    // `TODO fix
+
+    // @ts-ignore
+    res.status(200).json(files.map(file => file.filename)).end();
 };
 
 export { postApartment, getAll, getOne, deleteApartment, updateApartment, uploadImages };

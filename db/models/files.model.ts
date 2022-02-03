@@ -20,7 +20,7 @@ export class Files extends Model<Files> {
     id: number;
 
     @Column
-    files: string
+    filename: string;
 
     @ForeignKey(() => User)
     @Column

@@ -1,10 +1,11 @@
 import * as express from 'express';
-
 import * as path from 'path';
 import * as cors from 'cors';
+import * as swaggerUI from 'swagger-ui-express';
 
-import { authRouter, userRouter, apartmentRouter, bookingRouter } from './routes';
+import { authRouter, userRouter, apartmentRouter, bookingRouter, paymentRouter } from './routes';
 import { sequelize } from './config/sequelize';
+import * as swaggerJson from './docs/swagger.json';
 
 class App {
     public readonly app: express.Application = express();
@@ -13,10 +14,10 @@ class App {
         this.connectDB();
 
         (global as any).appRoot = path.resolve(process.cwd(), '../');
+
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
-
         this.app.use(express.static(path.resolve((global as any).appRoot, 'public')));
 
         this.mountRoutes();
@@ -45,7 +46,10 @@ class App {
         this.app.use('/auth', authRouter);
         this.app.use('/apartments', apartmentRouter);
         this.app.use('/booking', bookingRouter);
+        this.app.use('/payment', paymentRouter);
+
+        this.app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJson));
     };
-}
+};
 
 export const app = new App().app;

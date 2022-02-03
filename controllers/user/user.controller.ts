@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
 import { ErrorHandler, errors } from '../../errors';
-import { emailService } from '../../services/email.services';
-import { HASH_PASSWORD } from '../../helpers';
+import { emailService, HASH_PASSWORD } from '../../services';
 import { userValidator } from '../../validators';
 import { User } from '../../db/models';
 
@@ -27,14 +26,6 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { user } = req;
-        res.json(user);
-    } catch (e) {
-        next(e);
-    }
-};
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user_id } = req.params;
@@ -59,5 +50,5 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export {
-    createUser, getUser, deleteUser, updateUser
+    createUser, deleteUser, updateUser
 };

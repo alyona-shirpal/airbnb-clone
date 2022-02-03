@@ -1,0 +1,637 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "airBnb",
+    "version": "1.0",
+    "contact": {
+      "name": "Alyona Shirpal",
+      "email": "shirpalalona@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "createUser",
+        "description": "Create user",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "default": "example@gmail.com",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "default": "Test$100",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "default": "+30965671234",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created",
+            "schema": {
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Example@gmail.com"
+                },
+                "userName": {
+                  "type": "string",
+                  "example": "Climentina"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+380683523123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "UpdateUser",
+        "description": "Updated",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "User's id"
+          },
+          {
+            "name": "userName",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "default": "David",
+            "description": "User's name"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "deleteUser",
+        "description": "Removes single user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "User's id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "roles",
+            "in": "path",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "required": true,
+            "type": "string",
+            "description": "User's role "
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user email for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid username/password "
+          }
+        }
+      }
+    },
+    "/apartments": {
+      "post": {
+        "tags": [
+          "Apartments"
+        ],
+        "operationId": "postApartment",
+        "description": "Post Apartment",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "place",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "About the place"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "type": "string",
+            "description": "Tell about the place"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "required": true,
+            "type": "number",
+            "description": "Price of tha place "
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Location"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "post Apartment",
+            "schema": {
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "this apartment is located in the center of the city"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "price": {
+                  "type": "number",
+                  "example": "500"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Apartments"
+        ],
+        "operationId": "getApartments",
+        "description": "Get all Apartments",
+        "responses": {
+          "200": {
+            "description": "gets all Apartments",
+            "schema": {
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "this apartment is located in the center of the city"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "price": {
+                  "type": "number",
+                  "example": "500"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/apartments/{apartment_id}": {
+      "get": {
+        "tags": [
+          "Apartments"
+        ],
+        "operationId": "getApartment",
+        "description": "Get Apartment",
+        "parameters": [
+          {
+            "name": "apartment_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Apartment`s id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get Apartment",
+            "schema": {
+              "properties": {
+                "apartment_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "this apartment is located in the center of the city"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "renting_rules": {
+                  "type": "object"
+                },
+                "price": {
+                  "type": "number",
+                  "example": "500"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Apartments"
+        ],
+        "operationId": "updateApartment",
+        "description": "Update Apartment",
+        "parameters": [
+          {
+            "name": "apartment_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Apartment`s id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "Describe the place"
+          },
+          {
+          "name": "price",
+          "in": "formData",
+          "type": "number",
+          "description": "Change the price"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updated",
+            "schema": {
+              "properties": {
+                "apartment_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "this apartment is located in the center of the city"
+                },
+                "location": {
+                  "type": "object"
+                },
+                "renting_rules": {
+                  "type": "object"
+                },
+                "price": {
+                  "type": "number",
+                  "example": "500"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Apartments"
+        ],
+        "operationId": "deleteApartment",
+        "description": "Delete Apartment",
+        "parameters": [
+          {
+            "name": "apartment_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Apartment`s id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+          }
+        }
+    },
+    "/booking/{apartment_id}": {
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "operationId": "bookPlace",
+        "description": "Book a place",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "user_id",
+            "in": "formData",
+            "type": "number",
+            "required": true,
+            "description": "User`s id"
+          },
+          {
+            "name": "apartment_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Apartment`s id"
+          },
+          {
+            "name": "from",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "booking created",
+            "schema": {
+              "properties": {
+                "user_id": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "from": {
+                  "example": "2022-01-14"
+                },
+                "to": {
+                  "example": "2022-01-31"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/booking/confirm/{id}": {
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "operationId": "isApprovedByHost",
+        "description": "Host confirmation",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Booking id"
+          },
+          {
+            "name": "user_id",
+            "in": "formData",
+            "type": "number",
+            "required": true,
+            "description": "host id"
+          },
+          {
+            "name": "isApproved",
+            "in": "formData",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "booking approved",
+            "schema": {
+              "properties": {
+                "isApproved": {
+                  "example": "true"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/booking/{id}": {
+      "delete": {
+        "tags": [
+          "Booking"
+        ],
+        "operationId": "deleteBooking",
+        "description": "deletes booking by idr",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "booking id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "roles",
+            "in": "path",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "required": true,
+            "type": "string",
+            "description": "roles"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "404": {
+            "description": "booking not found"
+          }
+        }
+      }
+    }
+  }
+}

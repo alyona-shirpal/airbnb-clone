@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { COMPARE_PASSWORD, HASH_PASSWORD, tokenizer } from '../../helpers';
+import { COMPARE_PASSWORD, HASH_PASSWORD, tokenizer } from '../../services';
 import { userValidator } from '../../validators';
 import { ErrorHandler, errors } from '../../errors';
 import { ResponseStatusCodesEnum } from '../../constants';

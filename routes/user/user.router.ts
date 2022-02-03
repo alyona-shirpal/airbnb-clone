@@ -6,9 +6,6 @@ import * as userMiddleware from '../../middlewares/user/user.middleware';
 
 const router = Router();
 
-router.get('/:user_id',
-    userMiddleware.isUserIdPresent,
-    userController.getUser);
 router.post('/',
     userMiddleware.isEmailUnique,
     userController.createUser);

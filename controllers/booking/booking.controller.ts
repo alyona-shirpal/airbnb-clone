@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Apartment, Booking, User } from '../../db/models';
 import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
 import { Op } from 'sequelize';
-import { emailService } from '../../services/email.services';
+import { emailService } from '../../services';
 
 const bookPlace = async (req: Request, res: Response, next: NextFunction) => {
     try {

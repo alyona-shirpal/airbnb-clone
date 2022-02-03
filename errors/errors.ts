@@ -11,7 +11,7 @@ export const errors = {
 
     // 404
     NOT_FOUND_USER_NOT_PRESENT: { // When user wants to login, but email is not found in DB
-        message: 'User is not found'
+        message: 'Not found'
     },
     UNAUTHORIZED_WRONG_TOKEN: {
         message: 'Invalid token'

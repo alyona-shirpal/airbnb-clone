@@ -6,10 +6,10 @@ import { ResponseStatusCodesEnum } from '../../constants';
 
 const isIdPresent = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { booking_id } = req.params;
-        const id = await Booking.findByPk(booking_id);
+        const { id } = req.params;
+        const bookingId = await Booking.findByPk(id);
 
-        if (!id) {
+        if (!bookingId) {
             throw new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, errors.NOT_FOUND_USER_NOT_PRESENT.message);
         }
 
@@ -22,11 +22,10 @@ const isIdPresent = async (req: Request, res: Response, next: NextFunction) => {
 const isHostId = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user } = req;
-        console.log(user);
 
         const hostId = await Apartment.findByPk(user.user_id);
 
-        console.log(hostId);
+        // todo fix host confirmation if host has more then one apartment
 
         if (!hostId) {
             return res.status(404);

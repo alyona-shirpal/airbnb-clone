@@ -17,5 +17,7 @@ export const config = {
     ROOT_EMAIL_SERVICE: process.env.ROOT_EMAIL_SERVICE || 'gmail',
 
     JWT_CONFIRM_EMAIL_SECRET: process.env.JWT_CONFIRM_EMAIL_SECRET || 'somethingToConfirm&123$blaBla',
-    JWT_CONFIRM_EMAIL_LIFETIME: process.env.JWT_CONFIRM_EMAIL_LIFETIME || '24h'
+    JWT_CONFIRM_EMAIL_LIFETIME: process.env.JWT_CONFIRM_EMAIL_LIFETIME || '24h',
+
+    API_STRIPE_KEY: process.env.API_STRIPE_KEY || 'stripe_secret_key'
 };
