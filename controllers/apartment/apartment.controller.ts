@@ -73,12 +73,12 @@ const uploadImages = async (req: Request, res:Response, next :NextFunction) => {
 
     const apartmentInfo = await Apartment.findOne({ where: { apartment_id: req.params.apartment_id } });
 
-    if(!apartmentInfo) {
+    if (!apartmentInfo) {
         return res.status(404);
     }
 
     let file: string = '';
-    for(let i = 0; i < files.length; i++ ) {
+    for (let i = 0; i < files.length; i++) {
         file = files[i].filename;
     }
 

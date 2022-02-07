@@ -6,7 +6,6 @@ import { Op } from 'sequelize';
 
 const createBankCard = async (req:Request, res: Response, next: NextFunction) => {
     try {
-
         // the credit card info comes from front to stripe, stripe gives for last digits and token
         const creditCard = await stripe.paymentMethods.create({
             card: {
@@ -87,13 +86,15 @@ const payingProcess = async (req: Request, res: Response, next: NextFunction) =>
         const price = await Booking.findOne( { where:{
                 user_id: req.user.user_id,
                 id: req.params.booking_id
-            }})
-        if(!price) {
+            } } );
+
+        if (!price) {
             return res.status(404);
         }
+
         const priceInCent = price.total_price * 100;
 
-        const purchase = await stripe.paymentIntents.create({
+        await stripe.paymentIntents.create({
             amount: priceInCent,
             currency: 'USD',
             customer: user.stripe_id,
@@ -101,15 +102,12 @@ const payingProcess = async (req: Request, res: Response, next: NextFunction) =>
             confirm: true
         });
 
-
         const transaction: any = {};
         transaction.amount = price.total_price;
         transaction.tenent_id = req.user.user_id;
         transaction.apartment_id = price.apartment_id;
 
         await Transaction.create(transaction);
-
-        console.log(purchase);
 
         return res.status(200).send();
     } catch (e) {

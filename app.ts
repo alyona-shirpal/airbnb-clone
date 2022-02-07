@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as cors from 'cors';
 import * as swaggerUI from 'swagger-ui-express';
+import helmet from 'helmet';
 
 import { authRouter, userRouter, apartmentRouter, bookingRouter, paymentRouter, transactionRouter } from './routes';
 import { sequelize } from './config/sequelize';
@@ -16,6 +17,7 @@ class App {
         (global as any).appRoot = path.resolve(process.cwd(), '../');
 
         this.app.use(cors());
+        this.app.use(helmet());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.static(path.resolve((global as any).appRoot, 'public')));
