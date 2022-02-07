@@ -22,7 +22,7 @@ if (
 ) {
     throw Error('Root email credentials are not defined!');
 }
-console.log(config.ROOT_EMAIL_SERVICE, config.ROOT_EMAIL, config.ROOT_EMAIL_PASSWORD);
+
 // @ts-ignore
 const emailTemplates = new Email({
     message: {},

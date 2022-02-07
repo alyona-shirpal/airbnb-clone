@@ -69,19 +69,25 @@ const updateApartment = async (req: Request, res: Response, next: NextFunction) 
 };
 
 const uploadImages = async (req: Request, res:Response, next :NextFunction) => {
-    const files = req.files;
-    console.log('**********************************************');
-    console.log(files);
-    console.log('**********************************************');
+    const files: any = req.files;
 
-    const b = await Apartment.findOne({ where: { apartment_id: req.params.apartment_id } });
-    console.log(b);
+    const apartmentInfo = await Apartment.findOne({ where: { apartment_id: req.params.apartment_id } });
 
-    // // try to find by PK
+    if(!apartmentInfo) {
+        return res.status(404);
+    }
 
-    // @ts-ignore
-    await Files.create(req.body);
-    // `TODO fix
+    let file: string = '';
+    for(let i = 0; i < files.length; i++ ) {
+        file = files[i].filename;
+    }
+
+    const newFile:any = {};
+    newFile.apartment_id = apartmentInfo.apartment_id;
+    newFile.user_id = apartmentInfo.user_id;
+    newFile.filename = file;
+
+    await Files.create(newFile);
 
     // @ts-ignore
     res.status(200).json(files.map(file => file.filename)).end();

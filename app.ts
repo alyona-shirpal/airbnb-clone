@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as cors from 'cors';
 import * as swaggerUI from 'swagger-ui-express';
 
-import { authRouter, userRouter, apartmentRouter, bookingRouter, paymentRouter } from './routes';
+import { authRouter, userRouter, apartmentRouter, bookingRouter, paymentRouter, transactionRouter } from './routes';
 import { sequelize } from './config/sequelize';
 import * as swaggerJson from './docs/swagger.json';
 
@@ -47,6 +47,7 @@ class App {
         this.app.use('/apartments', apartmentRouter);
         this.app.use('/booking', bookingRouter);
         this.app.use('/payment', paymentRouter);
+        this.app.use('/transaction', transactionRouter);
 
         this.app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJson));
     };

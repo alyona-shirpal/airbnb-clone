@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { stripe } from '../services/stripe.service';
-import { User, UserPaymentInfo } from '../db/models';
+import { stripe } from '../../services/stripe.service';
+import { User, UserPaymentInfo, Booking, Transaction } from '../../db/models';
 import { Op } from 'sequelize';
 
 const createBankCard = async (req:Request, res: Response, next: NextFunction) => {
     try {
+
+        // the credit card info comes from front to stripe, stripe gives for last digits and token
         const creditCard = await stripe.paymentMethods.create({
             card: {
                 number: '4242424242424242',
@@ -26,6 +28,7 @@ const createBankCard = async (req:Request, res: Response, next: NextFunction) =>
 
         let stripe_customer_id = '';
 
+        // create custumer on stripe if user doesnt have any, new user has stripe_id
         if (!user.stripe_id) {
             const stripeCustomer = await stripe.customers.create({
                 email: user!.email,
@@ -81,13 +84,30 @@ const payingProcess = async (req: Request, res: Response, next: NextFunction) =>
             return res.status(404).send('CARD_NOT_FOUND');
         }
 
+        const price = await Booking.findOne( { where:{
+                user_id: req.user.user_id,
+                id: req.params.booking_id
+            }})
+        if(!price) {
+            return res.status(404);
+        }
+        const priceInCent = price.total_price * 100;
+
         const purchase = await stripe.paymentIntents.create({
-            amount: 20000,
+            amount: priceInCent,
             currency: 'USD',
             customer: user.stripe_id,
             payment_method: card.stripe_token,
             confirm: true
         });
+
+
+        const transaction: any = {};
+        transaction.amount = price.total_price;
+        transaction.tenent_id = req.user.user_id;
+        transaction.apartment_id = price.apartment_id;
+
+        await Transaction.create(transaction);
 
         console.log(purchase);
 

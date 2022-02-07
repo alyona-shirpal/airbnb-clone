@@ -467,7 +467,7 @@
     "/booking/{apartment_id}": {
       "post": {
         "tags": [
-          "Booking"
+          "Bookings"
         ],
         "operationId": "bookPlace",
         "description": "Book a place",
@@ -533,7 +533,7 @@
     "/booking/confirm/{id}": {
       "post": {
         "tags": [
-          "Booking"
+          "Bookings"
         ],
         "operationId": "isApprovedByHost",
         "description": "Host confirmation",
@@ -589,10 +589,10 @@
     "/booking/{id}": {
       "delete": {
         "tags": [
-          "Booking"
+          "Bookings"
         ],
         "operationId": "deleteBooking",
-        "description": "deletes booking by idr",
+        "description": "deletes booking by id",
         "parameters": [
           {
             "name": "id",
@@ -629,6 +629,123 @@
           },
           "404": {
             "description": "booking not found"
+          }
+        }
+      }
+    },
+    "/payment/card/create": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "createStripeId",
+        "description": "create customer on stripe",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/payment/card/:cardId/purchase/:booking_id": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "paymentProcess",
+        "description": "payment process by token and booking id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "cardId",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Card id"
+          },
+          {
+            "name": "booking_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "Booking's id"
+          },
+          {
+            "name": "stripe_token",
+            "in": "formData",
+            "type": "string",
+            "required": true,
+            "description": "stripe token"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "number",
+            "required": true,
+            "description": "User id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "payment went well"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
+    },
+    "/transaction":{
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "transactions",
+        "description": "Getting all transactions",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "access_token"
+          },
+          {
+            "name": "roles",
+            "in": "path",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "required": true,
+            "type": "string",
+            "description": "User's role "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all transactions"
+          },
+          "404": {
+            "description": "access denied"
           }
         }
       }

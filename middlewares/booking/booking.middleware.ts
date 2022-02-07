@@ -25,8 +25,6 @@ const isHostId = async (req: Request, res: Response, next: NextFunction) => {
 
         const hostId = await Apartment.findByPk(user.user_id);
 
-        // todo fix host confirmation if host has more then one apartment
-
         if (!hostId) {
             return res.status(404);
         }

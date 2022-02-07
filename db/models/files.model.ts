@@ -6,7 +6,8 @@ import {
     Column,
     ForeignKey,
     BelongsTo,
-    CreatedAt, UpdatedAt
+    CreatedAt,
+    UpdatedAt,
 } from 'sequelize-typescript';
 
 import { User } from './users.model';

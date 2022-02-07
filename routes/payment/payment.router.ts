@@ -7,6 +7,6 @@ const router = Router();
 
 router.post('/card/create', authMiddleware.checkAccessToken, paymentController.createBankCard);
 
-router.post('/card/:cardId/purchase', authMiddleware.checkAccessToken, paymentController.payingProcess);
+router.post('/card/:cardId/purchase/:booking_id', authMiddleware.checkAccessToken, paymentController.payingProcess);
 
 export const paymentRouter = router;
