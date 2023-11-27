@@ -1,6 +1,6 @@
 # Airbnb Clone API
 
-This project implements an API for booking apartments, designed as a simplified Airbnb clone. The technology stack includes **Express.js**, **Sequelize**, **TypeScript (ts)**, **Stripe**, **Multer**,  **Pug**
+This project implements an API for booking apartments, designed as a simplified Airbnb clone. The technology stack includes **Express.js**, **Sequelize**, **TypeScript**, **Stripe**, **Multer**,  **Pug**
 
 ## Installation
 
