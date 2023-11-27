@@ -26,7 +26,7 @@ Ensure proper database configuration in the `config/sequelize.ts` file. The appl
 ## Running the Application
 
 To start the application, run the following command:
-``npm install`` and ``npm run dev``
+``npm run dev``
 
 ## Routes
 - /users: User-related routes.
